@@ -155,7 +155,7 @@ make test
 
 **Endpoint:** `POST /generate-id`  
 **Purpose:** Generates a unique key for the client to use in a subsequent transfer request, registering it in the fast-path middleware cache.  
-**Response (201 Created):**
+**Response (200 OK):**
 
 ```json
 {"data":{"id":"uuid-v4-string"},"success":true}
@@ -175,7 +175,7 @@ make test
 }
 ```
 
-**Response (201 Created / 200 OK for Idempotent Hit):**
+**Response (200 OK for Idempotent Hit):**
 
 ```json
 {

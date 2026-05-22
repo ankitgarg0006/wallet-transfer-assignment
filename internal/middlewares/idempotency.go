@@ -106,6 +106,12 @@ func IdempotencyMiddleware(cacheService cache.CacheHelper) gin.HandlerFunc {
 			// Serve the exact same response as the first time.
 			c.Data(item.StatusCode, "application/json", item.Response)
 			c.Abort()
+
+		default:
+			// Defensive handling for unexpected cache state values.
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+				"error": "Unknown idempotency state",
+			})
 		}
 	}
 }
