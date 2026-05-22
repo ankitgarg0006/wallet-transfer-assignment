@@ -17,8 +17,8 @@ const (
 type Transfer struct {
 	ID             string         `gorm:"primaryKey;type:uuid" json:"id"`
 	IdempotencyKey string         `gorm:"uniqueIndex;not null" json:"idempotency_key"`
-	SourceWalletID string         `gorm:"not null;index" json:"source_wallet_id"`
-	DestWalletID   string         `gorm:"not null;index" json:"dest_wallet_id"`
+	SourceWalletID string         `gorm:"not null;index" json:"fromWalletId"`
+	DestWalletID   string         `gorm:"not null;index" json:"toWalletId"`
 	Amount         int64          `gorm:"not null" json:"amount"` // Amount in the smallest currency unit (e.g., cents)
 	Status         TransferStatus `gorm:"not null;default:'PENDING'" json:"status"`
 	FailureReason  string         `json:"failure_reason,omitempty"`

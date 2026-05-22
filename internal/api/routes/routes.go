@@ -22,10 +22,6 @@ func SetupRouter(
 	}
 	r := gin.Default()
 
-	// Global Middlewares
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
-
 	baseRouterGroup := r.Group("")
 	idempotencyRoutes.RegisterRoutes(baseRouterGroup, idempotencyHandler)
 	transferRoutes.RegisterRoutes(baseRouterGroup, transferHandler, cacheService)

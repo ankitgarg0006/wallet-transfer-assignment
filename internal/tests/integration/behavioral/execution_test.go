@@ -38,9 +38,9 @@ func TestBehavioral_TableDriven(t *testing.T) {
 			}
 
 			payload := map[string]interface{}{
-				"source_wallet_id": tc.SourceWalletID,
-				"dest_wallet_id":   tc.DestWalletID,
-				"amount":           tc.Amount,
+				"fromWalletId": tc.SourceWalletID,
+				"toWalletId":   tc.DestWalletID,
+				"amount":       tc.Amount,
 			}
 
 			resp := shared.ExecuteTransferRequest(payload, tc.IdempotencyKey)
@@ -74,9 +74,9 @@ func TestBehavioral_Idempotency_Sequential(t *testing.T) {
 	shared.PreIssueKey(key)
 
 	payload := map[string]interface{}{
-		"source_wallet_id": w1,
-		"dest_wallet_id":   w2,
-		"amount":           100,
+		"fromWalletId": w1,
+		"toWalletId":   w2,
+		"amount":       100,
 	}
 
 	// First hit
@@ -104,9 +104,9 @@ func TestBehavioral_Idempotency_HitOnFailed(t *testing.T) {
 	shared.PreIssueKey(key)
 
 	payload := map[string]interface{}{
-		"source_wallet_id": w1,
-		"dest_wallet_id":   w2,
-		"amount":           100,
+		"fromWalletId": w1,
+		"toWalletId":   w2,
+		"amount":       100,
 	}
 
 	// First hit: Should fail with 422
@@ -139,9 +139,9 @@ func TestBehavioral_Idempotency_ErrorRollback(t *testing.T) {
 		sqlDB.Close()
 
 		payload := map[string]interface{}{
-			"source_wallet_id": w1,
-			"dest_wallet_id":   w2,
-			"amount":           100,
+			"fromWalletId": w1,
+			"toWalletId":   w2,
+			"amount":       100,
 		}
 
 		resp := shared.ExecuteTransferRequest(payload, key)
@@ -167,9 +167,9 @@ func TestBehavioral_Ledger_Immutability(t *testing.T) {
 	shared.PreIssueKey(key)
 
 	payload := map[string]interface{}{
-		"source_wallet_id": w1,
-		"dest_wallet_id":   w2,
-		"amount":           100,
+		"fromWalletId": w1,
+		"toWalletId":   w2,
+		"amount":       100,
 	}
 	shared.ExecuteTransferRequest(payload, key)
 
@@ -206,9 +206,9 @@ func TestBehavioral_GlobalBalanceSum(t *testing.T) {
 	for _, tr := range transfers {
 		shared.PreIssueKey(tr.key)
 		payload := map[string]interface{}{
-			"source_wallet_id": tr.from,
-			"dest_wallet_id":   tr.to,
-			"amount":           tr.amount,
+			"fromWalletId": tr.from,
+			"toWalletId":   tr.to,
+			"amount":       tr.amount,
 		}
 		shared.ExecuteTransferRequest(payload, tr.key)
 	}

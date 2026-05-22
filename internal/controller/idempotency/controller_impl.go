@@ -19,7 +19,7 @@ func NewIdempotencyControllerImpl(cacheService cache.CacheHelper) IdempotencyCon
 }
 
 func (b *IdempotencyControllerImpl) GenerateID() (string, error) {
-	if err := validate_generate_id(); err != nil {
+	if err := validateGenerateID(); err != nil {
 		return "", err
 	}
 

@@ -17,7 +17,7 @@ func GetTransferTestCases() []TransferTestCase {
 	return []TransferTestCase{
 		{
 			Name:               "TC_TX_H_1: Malformed JSON",
-			RequestBody:        `{"source_wallet_id": "invalid-json"`,
+			RequestBody:        `{"fromWalletId": "invalid-json"`,
 			IdempotencyKey:     "1a22ae5d-438b-419c-aafd-5e999ec7f2e4",
 			MockSetup:          func(m *TransferMocks) {},
 			ExpectedStatusCode: http.StatusBadRequest,
@@ -25,7 +25,7 @@ func GetTransferTestCases() []TransferTestCase {
 		},
 		{
 			Name: "TC_TX_H_2: Validation Error - Self Transfer",
-			RequestBody: `{"source_wallet_id": "` + validID1 + `", "dest_wallet_id": "` +
+			RequestBody: `{"fromWalletId": "` + validID1 + `", "toWalletId": "` +
 				validID1 + `", "amount": 1000}`,
 			IdempotencyKey: validID1,
 			MockSetup: func(m *TransferMocks) {
@@ -38,7 +38,7 @@ func GetTransferTestCases() []TransferTestCase {
 		},
 		{
 			Name: "TC_TX_H_3: Business Error - Insufficient Funds",
-			RequestBody: `{"source_wallet_id": "` + validID1 + `", "dest_wallet_id": "` +
+			RequestBody: `{"fromWalletId": "` + validID1 + `", "toWalletId": "` +
 				validID2 + `", "amount": 1000}`,
 			IdempotencyKey: validID1,
 			MockSetup: func(m *TransferMocks) {
@@ -52,7 +52,7 @@ func GetTransferTestCases() []TransferTestCase {
 		},
 		{
 			Name: "TC_TX_H_4: Successful Transfer",
-			RequestBody: `{"source_wallet_id": "` + validID1 + `", "dest_wallet_id": "` +
+			RequestBody: `{"fromWalletId": "` + validID1 + `", "toWalletId": "` +
 				validID2 + `", "amount": 500}`,
 			IdempotencyKey: validID1,
 			MockSetup: func(m *TransferMocks) {
@@ -65,7 +65,7 @@ func GetTransferTestCases() []TransferTestCase {
 		},
 		{
 			Name: "TC_TX_H_5: Internal Server Error",
-			RequestBody: `{"source_wallet_id": "` + validID1 + `", "dest_wallet_id": "` +
+			RequestBody: `{"fromWalletId": "` + validID1 + `", "toWalletId": "` +
 				validID2 + `", "amount": 500}`,
 			IdempotencyKey: validID1,
 			MockSetup: func(m *TransferMocks) {

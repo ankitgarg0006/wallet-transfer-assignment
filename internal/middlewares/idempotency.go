@@ -21,6 +21,11 @@ func (w responseBodyWriter) Write(b []byte) (int, error) {
 	return w.ResponseWriter.Write(b)
 }
 
+func (w *responseBodyWriter) WriteString(s string) (int, error) {
+	w.body.WriteString(s)
+	return w.ResponseWriter.WriteString(s)
+}
+
 // IdempotencyMiddleware ensures "Exactly-Once" semantics for transfer requests.
 // It implements a Tier 1 (In-Memory) safety layer that:
 // 1. Blocks duplicate sequential requests (returns cached result).

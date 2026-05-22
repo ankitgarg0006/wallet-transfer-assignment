@@ -45,9 +45,9 @@ func TestConcurrency_TableDriven(t *testing.T) {
 					defer wg.Done()
 					key := fmt.Sprintf("550e8400-e29b-41d4-a716-44665545%04d", idx)
 					payload := map[string]interface{}{
-						"source_wallet_id": sourceIDs[idx],
-						"dest_wallet_id":   destIDs[idx],
-						"amount":           tc.AmountPerTx,
+						"fromWalletId": sourceIDs[idx],
+						"toWalletId":   destIDs[idx],
+						"amount":       tc.AmountPerTx,
 					}
 
 					resp := shared.ExecuteTransferRequest(payload, key)
@@ -87,9 +87,9 @@ func TestConcurrency_Idempotency_ConcurrentHit(t *testing.T) {
 	shared.PreIssueKey(key)
 
 	payload := map[string]interface{}{
-		"source_wallet_id": w1,
-		"dest_wallet_id":   w2,
-		"amount":           100,
+		"fromWalletId": w1,
+		"toWalletId":   w2,
+		"amount":       100,
 	}
 
 	var wg sync.WaitGroup

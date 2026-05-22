@@ -158,9 +158,7 @@ make test
 **Response (201 Created):**
 
 ```json
-{
-  "idempotencyKey": "uuid-v4-string"
-}
+{"data":{"id":"uuid-v4-string"},"success":true}
 ```
 
 ### Create Transfer
@@ -191,3 +189,4 @@ make test
 - **Database Migrations:** Currently, the application uses GORM's `AutoMigrate` for schema initialization. A future enhancement will introduce a formal migration tool (like `golang-migrate/migrate` or `goose`) to manage versioned, raw SQL schema changes safely across environments.
 - **Authentication:** Adding centralized JWT/API key validation.
 - **Distributed Cache:** Transitioning the Tier 1 in-memory cache to Redis for multi-instance deployments.
+

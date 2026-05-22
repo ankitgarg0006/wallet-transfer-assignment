@@ -54,10 +54,16 @@ func (h *TransferHandlerImpl) CreateTransfer(c *gin.Context) {
 		// Business Logic failures (e.g., Insufficient Funds) -> 422.
 		// These failures are permanent and CACHED by the middleware.
 		if transfer.IsBusinessError(err) {
-			utils.CustomAPIErrorWithMeta(c, http.StatusUnprocessableEntity, err.Error(), gin.H{
-				"transfer_id": result.ID,
-				"status":      string(result.Status),
-			})
+			meta := gin.H{
+				"transfer_id": idempotencyKey,
+			}
+
+			if result != nil {
+				meta["transfer_id"] = result.ID
+				meta["status"] = string(result.Status)
+			}
+
+			utils.CustomAPIErrorWithMeta(c, http.StatusUnprocessableEntity, err.Error(), meta)
 			return
 		}
 
